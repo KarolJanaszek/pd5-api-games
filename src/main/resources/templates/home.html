@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center">
+            <h1>Weather App</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form th:action="@{/weather/}" method="get" class="text-center" style="margin: 30px">
+                <input type="text" name="q">
+                <input type="submit" class="btn btn-success" value="Search for cities">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mark</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="l: ${loc}">
+                    <td th:text="${l.getWoeid()}" th:name="id"/>
+                    <td th:text="${l.getTitle()}"/>
+                    <td>
+                        <a th:href="@{/weather/(q=${q}, id=${l.getWoeid()})}"><button type="button" class="btn btn-info">Show details</button></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <div th:if="${param.id != null}">
+                <h2 class="text-center" style="margin: 15px;">
+                    <span th:text="${locate}" />
+                    <img th:src="${imgUrl}" style="height: 40px;">
+                </h2>
+                <table class="table text-center">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Weather</th>
+                        <th scope="col">Min temp [°C]</th>
+                        <th scope="col">Max temp [°C]</th>
+                        <th scope="col">Wind speed [m/s]</th>
+                        <th scope="col">Air pressure [hPa]</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="d: ${details}">
+                        <td th:text="${d.getWeatherStateName()}" />
+                        <td th:text="${d.getMinTemp()}" />
+                        <td th:text="${d.getMaxTemp()}" />
+                        <td th:text="${d.getWindSpeed()}">
+                        <td th:text="${d.getAirPressure()}"/>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
