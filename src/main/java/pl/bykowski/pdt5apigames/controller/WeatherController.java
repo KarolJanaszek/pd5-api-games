@@ -29,7 +29,6 @@ public class WeatherController {
     public String getWeather(Model model,
                              @RequestParam(required = false, defaultValue = "") String q,
                              @RequestParam(required = false, defaultValue = "") String id) {
-        LocalDate now = LocalDate.now();
 
         if (q.isEmpty()) {
             model.addAttribute("loc", new ArrayList<Location>());
@@ -39,7 +38,7 @@ public class WeatherController {
         }
 
         if (id.isEmpty()) {
-            model.addAttribute("details", new ArrayList<WeatherConsolidated>());
+            model.addAttribute("details", new WeatherConsolidated());
             model.addAttribute("locate", "");
         } else {
             Weather weather = weatherService.findWeatherById(id);
